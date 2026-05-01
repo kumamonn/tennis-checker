@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: browser-actions/setup-edge@v1
+        with:
+          edge-version: stable
+          install-edgedriver: true
+
       - name: Run tennis checker
         shell: pwsh
         env:
@@ -19,3 +24,6 @@ jobs:
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
         run: |
           .\src\tennis\bin\katsushika_tennis2.ps1
+
+
+          
