@@ -167,7 +167,7 @@ trap {
       "★例外エラー：" + (Get-date -format g)                        #>> $LOGF
       $Error[0]                                                    #>> $LOGF
       
-      sendLine $Error[0]
+      #sendLine $Error[0]
       
       $driver.Quit()
       $driver = $NULL
