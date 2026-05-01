@@ -36,4 +36,4 @@ jobs:
           MAIL_USER: ${{ secrets.MAIL_USER }}
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
         run: |
-          .\src\tennis\bin\katsushika_tennis2.ps1
+          .\src\tennis\bin\katsushika_tennis_holiday.ps1

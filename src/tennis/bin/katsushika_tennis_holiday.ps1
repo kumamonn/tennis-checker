@@ -145,11 +145,11 @@ https://rsv.shisetsu.city.katsushika.lg.jp/web/menu.jsp
 (10009312/1231)
 "@
 
-$res = sendLine $BODY_TAMPLATE
+#$res = sendLine $BODY_TAMPLATE
 
-if(-not($res.status -eq "200")){
-    throw
-}
+#if(-not($res.status -eq "200")){
+#    throw
+#}
  
 
 }
@@ -167,7 +167,7 @@ trap {
       "★例外エラー：" + (Get-date -format g)                        #>> $LOGF
       $Error[0]                                                    #>> $LOGF
       
-      sendLine $Error[0]
+      #sendLine $Error[0]
       
       $driver.Quit()
       $driver = $NULL
