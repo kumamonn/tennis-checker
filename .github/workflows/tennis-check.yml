@@ -23,6 +23,7 @@ jobs:
 
           $zipPath = Join-Path $driverDir "edgedriver_win64.zip"
           $url = "https://msedgedriver.microsoft.com/$edgeVersion/edgedriver_win64.zip"
+          Write-Host "Download URL: $url"
           
           Invoke-WebRequest -Uri $url -OutFile $zipPath
           Expand-Archive -Path $zipPath -DestinationPath $driverDir -Force
