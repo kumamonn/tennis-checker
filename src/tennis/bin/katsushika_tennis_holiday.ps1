@@ -6,13 +6,15 @@
 #---------------------------------------------------------------------
 # History : Create by aldehyde (2023/1/7)
 #---------------------------------------------------------------------
-$AplPath = Split-Path (Split-Path ( & { $myInvocation.ScriptName } ) -parent) -parent
-$SHID    = $MyInvocation.MyCommand.Name.substring(0,$MyInvocation.MyCommand.Name.IndexOf("."))
-$LOGF    = "${AplPath}\log\${SHID}.log"
+$BASE_DIR = $PSScriptRoot
 
-.${AplPath}\bin\KTSK_ENV.ps1
-.${AplPath}\bin\function.ps1
+$FileName = $FileName = [System.IO.Path]::GetFileNameWithoutExtension($MyInvocation.MyCommand.Path)
+#$LOGF    = "${AplPath}\log\${FileName}.log"
 
+.(Join-Path $BASE_DIR "KTSK_ENV.ps1")
+.(Join-Path $BASE_DIR "function.ps1")
+
+<#
 $driver = Create-EdgeDriver
 
 $driver.Navigate().GoToURL("https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/index.jsp")
@@ -25,6 +27,7 @@ $driver.ExecuteScript("javascript:sendPpsdCd((_dom == 3) ? document.layers['disp
 
 $driver.ExecuteScript("javascript:doTransInstSrchBuildAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchBuildAction, '200' , '200600')")
 
+#>
 
 $emptyCoats = New-Object 'System.Collections.Generic.List[PSObject]'
 
@@ -106,7 +109,7 @@ foreach ( $CoatKey in $CoatKeys ){
 #///////////////空きコートの検索////////////////////
 
 } catch [Exception] {
-    $Error[0] >>$LOGF
+    $Error[0]
 
 }
 
@@ -154,7 +157,7 @@ https://rsv.shisetsu.city.katsushika.lg.jp/web/menu.jsp
 
 }
 
-(Get-date -format g) + " 空きコート：" + $Notice_List.Count >>$LOGF
+(Get-date -format g) + " 空きコート：" + $Notice_List.Count
 
 $driver.Quit()
 $driver = $NULL
@@ -164,8 +167,8 @@ $driver = $NULL
 exit 0
 
 trap {
-      "★例外エラー：" + (Get-date -format g)                        #>> $LOGF
-      $Error[0]                                                    #>> $LOGF
+      "★例外エラー：" + (Get-date -format g)
+      $Error[0]
       
       #sendLine $Error[0]
       
