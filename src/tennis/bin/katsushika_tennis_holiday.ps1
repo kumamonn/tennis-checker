@@ -18,8 +18,6 @@ if (Test-Path (Join-Path $BASE_DIR ".env")) {
 .(Join-Path $BASE_DIR "KTSK_ENV.ps1")
 .(Join-Path $BASE_DIR "function.ps1")
 
-throw "ほげほげあああ"
-
 $driver = Create-EdgeDriver
 
 $driver.Navigate().GoToURL("https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/index.jsp")
