@@ -147,11 +147,11 @@ https://rsv.shisetsu.city.katsushika.lg.jp/web/menu.jsp
 (10009312/1231)
 "@
 
-$res = sendLine $BODY_TAMPLATE
+#$res = sendLine $BODY_TAMPLATE
 
-if(-not($res.status -eq "200")){
-    throw $res
-}
+#if(-not($res.status -eq "200")){
+#    throw $res
+#}
  
 
 }
