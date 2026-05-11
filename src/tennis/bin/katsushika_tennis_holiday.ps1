@@ -101,10 +101,13 @@ try{
             } catch [Exception] {
                  $Error[0]
             } finally {
-                #調べ終わったら元のカレンダー画面に戻ります
-                $URL = "javascript:doAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantBackWAllAction)"
-                $driver.ExecuteScript($URL)
-                Start-Random-Sleep
+                try {
+                    #調べ終わったら元のカレンダー画面に戻ります
+                    $URL = "javascript:doAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantBackWAllAction)"
+                    $driver.ExecuteScript($URL)
+                    Start-Random-Sleep
+                }
+                catch { }
             }
             
         }
