@@ -20,30 +20,6 @@ $COAT_URL_HASH2 = @{
     "にいじゅく"     = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '503200')"
 }
 
-#祝日一覧（もう使わない）
-$PUBLIC_HOLIDAY = @(
-#[DateTime]"2023/1/1",
-#[DateTime]"2023/1/2",
-#[DateTime]"2023/1/9",
-#[DateTime]"2023/2/11",
-#[DateTime]"2023/2/23",
-#[DateTime]"2023/3/21",
-[DateTime]"2024/4/29",
-[DateTime]"2024/5/3",
-[DateTime]"2024/5/4",
-[DateTime]"2024/5/5",
-[DateTime]"2024/5/6",
-[DateTime]"2024/7/15",
-[DateTime]"2023/8/11",
-[DateTime]"2023/8/12",
-[DateTime]"2023/9/16",
-[DateTime]"2023/9/22",
-[DateTime]"2023/9/23",
-[DateTime]"2023/10/14",
-[DateTime]"2023/11/4",
-[DateTime]"2023/11/23"
-)
-
 
 $WEB_DRIVER = Join-Path $BASE_DIR "WebDriver.dll"
 

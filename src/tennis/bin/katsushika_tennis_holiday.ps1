@@ -2,9 +2,7 @@
 
 #---------------------------------------------------------------------
 # PGM     : katsushika_tennis2.ps1
-# COMMENT : テニスコート空き状況検索(休日)
-#---------------------------------------------------------------------
-# History : Create by aldehyde (2023/1/7)
+# COMMENT : katsushika tennis court check(holiday)
 #---------------------------------------------------------------------
 $BASE_DIR = $PSScriptRoot
 
@@ -61,6 +59,13 @@ try{
             
             try{
             
+                $wait = New-Object OpenQA.Selenium.Support.UI.WebDriverWait($driver, [TimeSpan]::FromSeconds(10))
+
+                $wait.Until({
+                    param($d)
+                    $d.ExecuteScript("return document.readyState === 'complete' && typeof selectDay === 'function';")
+                })
+
                 $URL = "javascript:selectDay((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantWAllAction, 1, ${y}, ${m}, ${d})"
                 $driver.ExecuteScript($URL)
                 Start-Random-Sleep
@@ -152,9 +157,6 @@ $BODY_TAMPLATE = @"
 ※下記のコートが開いています↓↓
 ${BodyCoat}
 
-■葛飾区公共施設予約システム
-https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/index.jsp
-(10009312/1231)
 "@
 
 sendLine $BODY_TAMPLATE
