@@ -59,12 +59,35 @@ try{
             
             try{
             
-                $wait = New-Object OpenQA.Selenium.Support.UI.WebDriverWait($driver, [TimeSpan]::FromSeconds(10))
+                $timeout = (Get-Date).AddSeconds(10)
+                $ready = $false
 
-                $wait.Until({
-                    param($d)
-                    $d.ExecuteScript("return document.readyState === 'complete' && typeof selectDay === 'function';")
-                })
+                while ((Get-Date) -lt $timeout) {
+                    try {
+                        $ready = $driver.ExecuteScript(@"
+                            return document.readyState === 'complete' &&
+                                typeof selectDay === 'function';
+"@)
+
+                        if ($ready) {
+                            break
+                        }
+                    }
+                    catch {
+                        # 読み込み途中でJSエラーになっても無視
+                    }
+
+                    Start-Sleep -Milliseconds 500
+                }
+
+                if (-not $ready) {
+                    throw "selectDay が10秒待っても利用可能になりません"
+                }
+
+
+
+
+
 
                 $URL = "javascript:selectDay((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantWAllAction, 1, ${y}, ${m}, ${d})"
                 $driver.ExecuteScript($URL)
