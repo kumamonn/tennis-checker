@@ -21,14 +21,10 @@ $driver = Create-EdgeDriver
 
 $driver.Navigate().GoToURL("https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/index.jsp")
 
-$driver.ExecuteScript("javaScript:canLogin()")
-
-$driver.ExecuteScript("javascript:doPpsdSearchAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchPpsdAction)")
-
-$driver.ExecuteScript("javascript:sendPpsdCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchPpsAction, '200','2')")
-
-$driver.ExecuteScript("javascript:doTransInstSrchBuildAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchBuildAction, '200' , '200600')")
-
+ExecuteScriptWithSleep $driver "javaScript:canLogin()"
+ExecuteScriptWithSleep $driver "javascript:doPpsdSearchAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchPpsdAction)"
+ExecuteScriptWithSleep $driver "javascript:sendPpsdCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchPpsAction, '200','2')"
+ExecuteScriptWithSleep $driver "javascript:doTransInstSrchBuildAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchBuildAction, '200' , '200600')"
 
 $emptyCoats = New-Object 'System.Collections.Generic.List[PSObject]'
 
@@ -83,11 +79,6 @@ try{
                 if (-not $ready) {
                     throw "selectDay が10秒待っても利用可能になりません"
                 }
-
-
-
-
-
 
                 $URL = "javascript:selectDay((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantWAllAction, 1, ${y}, ${m}, ${d})"
                 $driver.ExecuteScript($URL)
