@@ -42,9 +42,8 @@ try{
         
         $URL = $COAT_URL_HASH[$CoatKey]
 
-        $driver.ExecuteScript($URL)
-        Start-Random-Sleep
-        
+        ExecuteScriptWithSleep $driver $URL
+
         foreach ( $holiday in $holidays ){
         
             "対象日付：" + ${holiday}.ToString("yyyy-MM-dd")
@@ -54,39 +53,12 @@ try{
             $d = $holiday.ToString("dd")
             
             try{
-            
-                $timeout = (Get-Date).AddSeconds(10)
-                $ready = $false
-
-                while ((Get-Date) -lt $timeout) {
-                    try {
-                        $ready = $driver.ExecuteScript(@"
-                            return document.readyState === 'complete' &&
-                                typeof selectDay === 'function';
-"@)
-
-                        if ($ready) {
-                            break
-                        }
-                    }
-                    catch {
-                        # 読み込み途中でJSエラーになっても無視
-                    }
-
-                    Start-Sleep -Milliseconds 500
-                }
-
-                if (-not $ready) {
-                    throw "selectDay が10秒待っても利用可能になりません"
-                }
 
                 $URL = "javascript:selectDay((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantWAllAction, 1, ${y}, ${m}, ${d})"
-                $driver.ExecuteScript($URL)
-                Start-Random-Sleep
-                
+                ExecuteScriptWithSleep $driver $URL
+
                 #imgタグ内にある空きマーク画像の数を数える
                 #$emptyImgs = 0
-
 
                 #空き状況画面のTR要素（YYYY年MM月DD日、テニスコートA面、テニスコートB面...etc）
                 $TR_ELEMENTS = $driver.FindElements([By]::XPath("//*[@id='disp']/center/form/center/table/tbody/tr[4]/td/table/tbody/tr/td[1]/table/tbody/tr"))
@@ -116,25 +88,20 @@ try{
                     }
 
                 }
+
+                #調べ終わったら元のカレンダー画面に戻ります
+                $URL = "javascript:doAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantBackWAllAction)"
+                ExecuteScriptWithSleep $driver $URL
             
             } catch [Exception] {
                  $Error[0]
-            } finally {
-                try {
-                    #調べ終わったら元のカレンダー画面に戻ります
-                    $URL = "javascript:doAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantBackWAllAction)"
-                    $driver.ExecuteScript($URL)
-                    Start-Random-Sleep
-                }
-                catch { }
-            }
+            } 
             
         }
         
         #コート選択画面に戻る
         $URL = "javascript:doAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchMonthVacantBackAction);"
-        $driver.ExecuteScript($URL)   
-        Start-Random-Sleep
+        ExecuteScriptWithSleep $driver $URL
     }
     #///////////////空きコートの検索 end////////////////////
 
