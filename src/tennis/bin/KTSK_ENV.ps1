@@ -4,7 +4,7 @@ $COAT_URL_HASH = @{
     #"水元"        = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '500930')"
     #"東金町"       = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '501700')"
     "渋江公園"                 = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '501800')"
-    #"小菅東"       = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '501900')"
+    "小菅東"       = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '501900')"
     "上千葉"         = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '502000')"
     "にいじゅく"     = "javascript:sendBldCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchInstAction, '503200')"
 }

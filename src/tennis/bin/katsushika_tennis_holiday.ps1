@@ -19,12 +19,7 @@ if (Test-Path (Join-Path $BASE_DIR ".env")) {
 
 $driver = Create-EdgeDriver
 
-$driver.Navigate().GoToURL("https://rsv.shisetsu.city.katsushika.lg.jp/katsushika/web/index.jsp")
-
-ExecuteScriptWithSleep $driver "javaScript:canLogin()"
-ExecuteScriptWithSleep $driver "javascript:doPpsdSearchAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchPpsdAction)"
-ExecuteScriptWithSleep $driver "javascript:sendPpsdCd((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchPpsAction, '200','2')"
-ExecuteScriptWithSleep $driver "javascript:doTransInstSrchBuildAction((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWTransInstSrchBuildAction, '200' , '200600')"
+Open-TopPage $driver
 
 $emptyCoats = New-Object 'System.Collections.Generic.List[PSObject]'
 
@@ -40,9 +35,7 @@ try{
     foreach ( $CoatKey in $CoatKeys ){
         $CoatKey
         
-        $URL = $COAT_URL_HASH[$CoatKey]
-
-        ExecuteScriptWithSleep $driver $URL
+        Open-CoatCalendar $driver $CoatKey
 
         foreach ( $holiday in $holidays ){
         
@@ -56,6 +49,8 @@ try{
 
                 $URL = "javascript:selectDay((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantWAllAction, 1, ${y}, ${m}, ${d})"
                 ExecuteScriptWithSleep $driver $URL
+
+                throws "aaaa"
 
                 #imgタグ内にある空きマーク画像の数を数える
                 #$emptyImgs = 0
@@ -94,8 +89,25 @@ try{
                 ExecuteScriptWithSleep $driver $URL
             
             } catch [Exception] {
-                 $Error[0]
-            } 
+                "日付処理でエラー。画面を作り直します。"
+                "対象コート：$CoatKey"
+                "対象日付：" + $holiday.ToString("yyyy-MM-dd")
+                $Error[0]
+
+                try {
+                    Open-CoatCalendar $driver $CoatKey
+                } catch {
+                    "画面復旧に失敗しました。ブラウザを作り直します。"
+                    $Error[0]
+
+                    try {
+                        $driver.Quit()
+                    } catch {}
+
+                    $driver = Create-EdgeDriver
+                    Open-CoatCalendar $driver $CoatKey
+                }
+            }
             
         }
         
