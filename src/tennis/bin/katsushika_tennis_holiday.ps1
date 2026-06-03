@@ -50,8 +50,6 @@ try{
                 $URL = "javascript:selectDay((_dom == 3) ? document.layers['disp'].document.form1 : document.form1, gRsvWInstSrchVacantWAllAction, 1, ${y}, ${m}, ${d})"
                 ExecuteScriptWithSleep $driver $URL
 
-                throws "aaaa"
-
                 #imgタグ内にある空きマーク画像の数を数える
                 #$emptyImgs = 0
 
