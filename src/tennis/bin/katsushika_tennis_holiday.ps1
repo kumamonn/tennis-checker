@@ -17,6 +17,20 @@ if (Test-Path (Join-Path $BASE_DIR ".env")) {
 .(Join-Path $BASE_DIR "KTSK_ENV.ps1")
 .(Join-Path $BASE_DIR "function.ps1")
 
+# 日本時間を取得
+$tz = [System.TimeZoneInfo]::FindSystemTimeZoneById("Tokyo Standard Time")
+$now = [System.TimeZoneInfo]::ConvertTimeFromUtc(
+    [DateTime]::UtcNow, $tz
+)
+
+Write-Host "現在時刻: $($now.ToString('yyyy-MM-dd HH:mm:ss'))"
+    
+# サイト稼働時間チェック（7:00～24:00）
+if ($now.Hour -lt 7) {
+    Write-Host "サイト稼働時間外のため処理を終了します。"
+    ecxit 0
+}
+
 $driver = Create-EdgeDriver
 
 Open-TopPage $driver
@@ -173,7 +187,7 @@ trap {
       $Error[0]
       
       #sendLine $Error[0] #LINEは月に200通までしか送れないので節約
-      sendErrorMail $Error[0]
+      #sendErrorMail $Error[0]
       
       $driver.Quit()
       $driver = $NULL
