@@ -3,21 +3,12 @@ name: Check Tennis Court
 on:
   workflow_dispatch:
   schedule:
-<<<<<<< HEAD
   - cron: '10 6 * * *'
     timezone: 'Asia/Tokyo'
   - cron: '40 6 * * *'
     timezone: 'Asia/Tokyo'
   - cron: '10 7 * * *'
     timezone: 'Asia/Tokyo'
-=======
-  #- cron: '10 6 * * *'
-  #  timezone: 'Asia/Tokyo'
-  #- cron: '40 6 * * *'
-  #  timezone: 'Asia/Tokyo'
-  #- cron: '10 7 * * *'
-  #  timezone: 'Asia/Tokyo'
->>>>>>> da00607b6d1ec4ea231b73180b9e87be8c8f1b9f
   - cron: '10 8 * * *'
     timezone: 'Asia/Tokyo'
   - cron: '10 9 * * *'
