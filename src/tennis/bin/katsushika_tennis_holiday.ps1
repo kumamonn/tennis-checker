@@ -28,7 +28,7 @@ Write-Host "現在時刻: $($now.ToString('yyyy-MM-dd HH:mm:ss'))"
 # サイト稼働時間チェック（7:00～24:00）
 if ($now.Hour -lt 7) {
     Write-Host "サイト稼働時間外のため処理を終了します。"
-    ecxit 0
+    exit 0
 }
 
 $driver = Create-EdgeDriver
